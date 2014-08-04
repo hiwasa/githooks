@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git submodule update
+if [ $? -eq 0 ];then echo updated;fi

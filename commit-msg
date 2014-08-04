@@ -1,0 +1,7 @@
+#!/bin/sh
+
+COUNT=$(head -1 "$1"|wc -c)
+echo $COUNT words
+if [ $COUNT -gt 70 ];then
+    echo too long
+fi

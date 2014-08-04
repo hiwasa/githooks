@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ $3 = 1 ];then
+ headdata=$(cat .git/HEAD)
+ head=${headdata##ref: refs/heads/}
+#echo $head
+#echo $headdata
+if [ "${headdata:0:3}" = "ref" ];then
+  hasremote=0
+  if grep "'$head'" .git/FETCH_HEAD >/dev/null;then
+   hasremote=1
+  fi
+#echo $hasremote
+  if [ $hasremote = 1 ];then
+   git merge --ff-only origin/$head | grep -v '^Already up-to-date.$'
+  fi
+ fi
+
+ git submodule update
+fi
