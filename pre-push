@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if git log -1 --pretty='format:%s'|grep 'wip' >/dev/null;then
+   echo 'this branch is wip'
+   exit 1
+fi
