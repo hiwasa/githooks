@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if test "$(git symbolic-ref HEAD --short)" == "master";then
+if test "$(git symbolic-ref HEAD --short 2>/dev/null)" == "master";then
     echo -e "this is master"
 fi
 
-git diff-index --cached --name-only HEAD | grep '.php$' | xargs grep -l . 2>/dev/null | xargs -n 1 php -l
+git diff-index --cached --name-only HEAD | grep '.php$' | xargs grep -ls . | xargs -n 1 php -l 1>/dev/null
 if test $? -ne 0; then
     echo "error!"
     exit 1
