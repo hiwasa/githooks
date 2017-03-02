@@ -1,6 +1,13 @@
 #!/bin/bash
 
-master=${GIT_MASTER_BRANCH:-master}
+if [ -n "${GIT_MASTER_BRANCH}" ];then
+    master=${GIT_MASTER_BRANCH}
+else
+    origin=$(git remote|tail -1)
+    master=$(git symbolic-ref --short 'refs/remotes/'$origin'/HEAD')
+    master=${master:-master}
+    master=${master#*/}
+fi
 if test "$(git symbolic-ref HEAD --short)" == "$master";then
     echo -e "this is $master"
 fi
