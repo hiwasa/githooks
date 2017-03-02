@@ -6,6 +6,6 @@ if git log -1 --pretty='format:%s'|grep 'wip' >/dev/null;then
 fi
 
 echo prove start
-if [ -n "${PROVE_COMMAND}" ] && ! ${PROVE_COMMAND};then
+if [ -n "${PROVE_COMMAND}" ] && ! eval ${PROVE_COMMAND};then
  exit 1
 fi
