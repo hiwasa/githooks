@@ -1,6 +1,8 @@
 #!/bin/bash
 
 if cat $1 | grep -q '^refs #[0-9]\|^wip';then exit;fi
+if [ "$2" != "message" ];then exit;fi
+if [ -e .git/MERGE_HEAD ];then exit;fi
 branch=$(git rev-parse --abbrev-ref HEAD)
 if ! echo $branch | grep -q '\(^\|_\)[0-9]\+_';then exit;fi
 ret=$(echo $branch | sed 's/[^0-9]*\([0-9]*\)_.*/refs #\1/')
