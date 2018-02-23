@@ -8,5 +8,18 @@ if [ $? -eq 0 ];then
   fi
  fi
 
+ if [ "$REDMINE_URL" != "" -a "$REDMINE_API_KEY" != "" -a "$REDMINE_ID" != "" -a $(git reflog $head | wc -l) -eq 1 ];then
+  no=$(echo $head | sed -e 's/^[^0-9]*\([0-9]*\)_.*/\1/')
+  if [ "$no" != "" ];then
+   json=$(curl --silent "${REDMINE_URL%/}/issues/${no}.json?key=${REDMINE_API_KEY}")
+   echo $json | jq '.issue.subject'
+   if [ "$(echo $json | jq -r '.issue.assigned_to.id')" = "$REDMINE_ID" ];then
+    echo 'hash will be ok'
+   else
+    echo 'hash maybe wrong'
+   fi
+  fi
+ fi
+
  git submodule update
 fi
