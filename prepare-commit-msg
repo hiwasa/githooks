@@ -9,7 +9,7 @@ if [ "$branch" = "HEAD" ];then
  elif [ -e '.git/rebase-apply' ];then branch=$(<.git/rebase-apply/head-name)
  fi
 fi
-if ! echo $branch | grep -q '\(^\|_\)[0-9]\+_';then exit;fi
-ret=$(echo $branch | sed 's/[^0-9]*\([0-9]*\)_.*/refs #\1/')
+if ! echo $branch | grep -Gq '\(^\|_\)[0-9]\+_';then exit;fi
+ret=$(echo $branch | sed 's/^\(\|[^_]*_\)\([0-9]*\)_.*/refs #\2/')
 ret=$ret' '$(cat $1)
 echo "$ret" > $1
