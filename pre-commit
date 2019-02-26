@@ -2,7 +2,7 @@
 
 if [ -n "${GIT_MASTER_BRANCH}" ];then
     master=${GIT_MASTER_BRANCH}
-else
+elif [ $(git remote|wc -l) -gt 0 ];then
     origin=$(git remote|tail -1)
     master=$(git symbolic-ref --short 'refs/remotes/'$origin'/HEAD')
     master=${master:-master}
