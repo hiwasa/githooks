@@ -8,11 +8,11 @@ elif [ $(git remote|wc -l) -gt 0 ];then
     master=${master:-master}
     master=${master#*/}
 fi
-if test "$(git symbolic-ref HEAD --short)" == "$master";then
+if test "$(git symbolic-ref HEAD --short --)" == "$master";then
     echo -e "this is $master"
 fi
 
-git diff-index --cached --name-only HEAD | grep '.php$' | xargs grep -l . 2>/dev/null | xargs -n 1 php -l |grep -v '^No syntax error'
+git diff-index --cached --name-only HEAD -- | grep '.php$' | xargs grep -l . 2>/dev/null | xargs -n 1 php -l |grep -v '^No syntax error'
 if test $? -ne 1; then
     echo "php error!"
     exit 1
