@@ -4,7 +4,7 @@ if [ $3 = 1 ];then
  head=$(git symbolic-ref --short --quiet HEAD --)
 if [ $? -eq 0 ];then
   if git for-each-ref --format='%(refname:short)' refs/remotes|grep -q "^origin/$head\$";then
-   git merge --ff-only origin/$head | grep -v '^Already up-to-date.$'
+   git merge --ff-only --quiet --stat origin/$head
   fi
  fi
 
